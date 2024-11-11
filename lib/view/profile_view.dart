@@ -1,7 +1,5 @@
 // API Integration With Dio
 
-import 'dart:convert';
-
 import 'package:apiproject/model/post_model.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +9,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   final dio = Dio();
+
   final url = "https://jsonplaceholder.typicode.com/posts";
 
   Future<List<PostModel>> fetchPosts() async {
@@ -31,8 +30,10 @@ class ProfileView extends StatelessWidget {
     }
   }
 
+  // @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(),
       body: FutureBuilder<List<PostModel>>(
           future: fetchPosts(),
           builder: (con, sna) {

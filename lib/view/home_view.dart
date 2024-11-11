@@ -66,15 +66,14 @@ class _HomeViewState extends State<HomeView> {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (con) => ProfileView()));
+                Navigator.of(context).push(createRoute());
               },
               icon: Icon(Icons.arrow_forward))
         ],
       ),
       body: _futurePosts == null
           ? Center(
-              child: Text("pressed the button"),
+              child: Text("Pressed Button"),
             )
           : FutureBuilder<List<PostModel>>(
               future: fetchAndAddPosts(),
@@ -133,4 +132,22 @@ class _HomeViewState extends State<HomeView> {
       ),
     );
   }
+}
+
+Route createRoute() {
+  return PageRouteBuilder(
+    transitionsBuilder: (context, animation, secondaryAnimation, child) {
+      var begin = 0.0;
+      var end = 1.0;
+      var curve = Curves.easeInOutBack;
+
+      var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+      return FadeTransition(
+        opacity: animation.drive(tween),
+        child: child,
+      );
+    },
+    pageBuilder: (context, animation, secondaryAnimation) => ProfileView(),
+  );
 }
