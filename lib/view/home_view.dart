@@ -19,7 +19,7 @@ class _HomeViewState extends State<HomeView> {
   void _fetchPosts() {
     if (!_hasFetched) {
       setState(() {
-        _futurePosts = fetchAndAddPosts();
+        _futurePosts = fetchPosts();
         _hasFetched = true; // Set flag to true to prevent further calls
       });
     }
@@ -27,7 +27,7 @@ class _HomeViewState extends State<HomeView> {
 
   final url = "https://jsonplaceholder.typicode.com/posts";
 
-  Future<List<PostModel>> fetchAndAddPosts() async {
+  Future<List<PostModel>> fetchPosts() async {
     try {
       final response = await http.get(Uri.parse(url));
 
@@ -76,7 +76,7 @@ class _HomeViewState extends State<HomeView> {
               child: Text("Pressed Button"),
             )
           : FutureBuilder<List<PostModel>>(
-              future: fetchAndAddPosts(),
+              future: fetchPosts(),
               builder: (con, sna) {
                 if (sna.hasError) {
                   return const Center(child: Text("Error"));
